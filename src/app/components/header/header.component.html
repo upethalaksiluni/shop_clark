@@ -1,0 +1,22 @@
+<header class="header">
+  <div class="logo-section">
+    <div class="logo">
+      <span class="logo-icon">🛍️</span>
+      <span class="logo-text">Shop<strong>Clark</strong></span>
+    </div>
+  </div>
+  
+  <nav class="navigation">
+    <div class="nav-categories">
+      <div *ngIf="isLoading" class="loading">Loading categories...</div>
+      <a 
+        *ngFor="let category of displayedCategories" 
+        [routerLink]="['/products']" 
+        [queryParams]="{category: category.slug}"
+        class="nav-item"
+      >
+        {{ formatCategoryName(category.slug) }}
+      </a>
+    </div>
+  </nav>
+</header>

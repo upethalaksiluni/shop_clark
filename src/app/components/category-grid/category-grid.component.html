@@ -1,0 +1,23 @@
+<div class="category-grid">
+  <h2>Category List</h2>
+  
+  <div *ngIf="isLoading" class="loading">
+    <p>Loading categories...</p>
+  </div>
+  
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="ngOnInit()" class="retry-btn">Retry</button>
+  </div>
+  
+  <div *ngIf="!isLoading && !error" class="grid-container">
+    <div 
+      *ngFor="let category of categories" 
+      class="category-item"
+      [routerLink]="['/products']" 
+      [queryParams]="{category: category.slug}"
+    >
+      {{ formatCategoryName(category.slug) }}
+    </div>
+  </div>
+</div>

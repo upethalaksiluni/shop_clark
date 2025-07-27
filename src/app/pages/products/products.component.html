@@ -1,0 +1,36 @@
+<div class="products-page">
+  <div class="page-header">
+    <h1>
+      <span *ngIf="!currentCategory">All Products</span>
+      <span *ngIf="currentCategory">{{ formatCategoryName(currentCategory) }}</span>
+    </h1>
+    <p *ngIf="!isLoading && !error" class="products-count">
+      {{ products.length }} products found
+    </p>
+  </div>
+  
+  <div *ngIf="isLoading" class="loading">
+    <div class="loading-spinner"></div>
+    <p>Loading products...</p>
+  </div>
+  
+  <div *ngIf="error" class="error">
+    <p>{{ error }}</p>
+    <button (click)="loadProducts()" class="retry-btn">Retry</button>
+  </div>
+  
+  <div *ngIf="!isLoading && !error" class="products-grid">
+    <div 
+      *ngFor="let product of products" 
+      class="product-item"
+      [routerLink]="['/products', product.id]"
+    >
+      <app-product-card [product]="product"></app-product-card>
+    </div>
+  </div>
+  
+  <div *ngIf="!isLoading && !error && products.length === 0" class="no-products">
+    <h3>No products found</h3>
+    <p>Try browsing a different category.</p>
+  </div>
+</div>
