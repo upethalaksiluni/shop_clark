@@ -14,6 +14,7 @@ export class ProductDetailComponent implements OnInit {
   isLoading = true;
   error: string | null = null;
   selectedImageIndex = 0;
+  selectedQuantity = 1; 
 
   constructor(
     private route: ActivatedRoute,
@@ -38,6 +39,7 @@ export class ProductDetailComponent implements OnInit {
       next: (product) => {
         this.product = product;
         this.isLoading = false;
+        this.selectedQuantity = 1;
       },
       error: (error) => {
         console.error('Error loading product:', error);
@@ -57,5 +59,13 @@ export class ProductDetailComponent implements OnInit {
 
   getDiscountedPrice(price: number, discount: number): number {
     return price - (price * discount / 100);
+  }
+
+  
+  getQuantityOptions(): number[] {
+    if (!this.product) return [1];
+    
+    const maxQuantity = Math.min(this.product.stock, 10); 
+    return Array.from({ length: maxQuantity }, (_, i) => i + 1);
   }
 }

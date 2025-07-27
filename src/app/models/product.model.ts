@@ -1,11 +1,11 @@
 export interface Product {
     id: number;
-  title: string; // Changed from 'name' to 'title' to match API
+  title: string; 
   price: number;
   description: string;
   category: string;
   brand: string;
-  thumbnail: string; // Changed from 'image' to 'thumbnail' to match API
+  thumbnail: string; 
   images: string[];
   rating: number;
   stock: number;
@@ -17,4 +17,9 @@ export interface ProductsResponse {
   total: number;
   skip: number;
   limit: number;
+}
+
+export interface AddToCartRequest {
+  productId: number;
+  quantity: number;
 }

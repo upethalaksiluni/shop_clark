@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
-import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http'; // ADD THIS IMPORT
+import { BrowserModule } from '@angular/platform-browser';  
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -11,6 +12,11 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 
+import { CartComponent } from './pages/cart/cart.component';
+import { CartIconComponent } from './components/cart-icon/cart-icon.component';
+import { CartItemComponent } from './components/cart-item/cart-item.component';
+import { AddToCartButtonComponent } from './components/add-to-cart-button/add-to-cart-button.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,12 +26,17 @@ import { ProductDetailComponent } from './pages/product-detail/product-detail.co
     CategoryGridComponent,
     HomeComponent,
     ProductsComponent,
-    ProductDetailComponent
+    ProductDetailComponent,
+    CartComponent,
+    CartIconComponent,
+    CartItemComponent,
+    AddToCartButtonComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule // ADD THIS LINE
+    HttpClientModule,
+    FormsModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

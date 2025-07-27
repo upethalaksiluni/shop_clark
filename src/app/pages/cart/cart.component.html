@@ -1,0 +1,74 @@
+<div class="cart-page">
+  <div class="cart-header">
+    <h1>Shopping Cart</h1>
+    <p *ngIf="!isEmpty()" class="cart-count">{{ cart.totalItems }} item(s)</p>
+  </div>
+
+  <!-- Empty Cart State -->
+  <div *ngIf="isEmpty()" class="empty-cart">
+    <div class="empty-cart-icon">🛒</div>
+    <h2>Your cart is empty</h2>
+    <p>Looks like you haven't added any items to your cart yet.</p>
+    <button class="continue-shopping-btn" (click)="continueShopping()">
+      Continue Shopping
+    </button>
+  </div>
+
+  <!-- Cart with Items -->
+  <div *ngIf="!isEmpty()" class="cart-content">
+    <div class="cart-items">
+      <div class="cart-items-header">
+        <h2>Items in your cart</h2>
+        <button class="clear-cart-btn" (click)="clearCart()">
+          Clear Cart
+        </button>
+      </div>
+      
+      <div class="items-list">
+        <app-cart-item
+          *ngFor="let item of cart.items; trackBy: trackByItemId"
+          [item]="item"
+          (quantityChange)="onQuantityChange($event)"
+          (removeItem)="onRemoveItem($event)"
+        ></app-cart-item>
+      </div>
+    </div>
+
+    <div class="cart-summary">
+      <div class="summary-card">
+        <h3>Order Summary</h3>
+        
+        <div class="summary-row">
+          <span>Subtotal ({{ cartSummary.totalItems }} items):</span>
+          <span>{{ formatCurrency(cartSummary.subtotal) }}</span>
+        </div>
+        
+        <div class="summary-row discount" *ngIf="cartSummary.totalDiscount > 0">
+          <span>Discount:</span>
+          <span class="discount-amount">-{{ formatCurrency(cartSummary.totalDiscount) }}</span>
+        </div>
+        
+        <div class="summary-row total">
+          <span>Total:</span>
+          <span class="total-amount">{{ formatCurrency(cartSummary.finalTotal) }}</span>
+        </div>
+        
+        <div class="savings-info" *ngIf="cartSummary.totalDiscount > 0">
+          <p class="savings-text">
+            🎉 You're saving {{ formatCurrency(cartSummary.totalDiscount) }}!
+          </p>
+        </div>
+        
+        <div class="summary-actions">
+          <button class="checkout-btn" (click)="proceedToCheckout()">
+            Proceed to Checkout
+          </button>
+          
+          <button class="continue-shopping-btn-secondary" (click)="continueShopping()">
+            Continue Shopping
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

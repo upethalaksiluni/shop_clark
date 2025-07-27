@@ -1,95 +1,90 @@
 <div class="product-detail-page">
-  <div *ngIf="isLoading" class="loading">
-    <div class="loading-spinner"></div>
-    <p>Loading product details...</p>
-  </div>
-  
-  <div *ngIf="error" class="error">
-    <p>{{ error }}</p>
-    <button (click)="ngOnInit()" class="retry-btn">Retry</button>
-  </div>
-  
-  <div *ngIf="product && !isLoading && !error" class="product-detail-container">
-    <div class="product-image-section">
-      <div class="main-image">
-        <img 
-          [src]="product.images && product.images.length > 0 ? product.images[selectedImageIndex] : product.thumbnail" 
-          [alt]="product.title" 
-          class="product-image" 
-        />
-        <div class="discount-badge" *ngIf="product.discountPercentage > 0">
-          -{{ product.discountPercentage.toFixed(0) }}%
-        </div>
-      </div>
-      
-      <div class="image-thumbnails" *ngIf="product.images && product.images.length > 1">
-        <img 
-          *ngFor="let image of product.images; let i = index"
-          [src]="image"
-          [alt]="product.title"
-          class="thumbnail"
-          [class.active]="i === selectedImageIndex"
-          (click)="selectImage(i)"
-        />
-      </div>
+    <div *ngIf="isLoading" class="loading">
+        <div class="loading-spinner"></div>
+        <p>Loading product details...</p>
     </div>
-    
-    <div class="product-info-section">
-      <h1 class="product-title">{{ product.title }}</h1>
-      
-      <div class="product-details">
-        <div class="product-pricing">
-          <span class="current-price">${{ product.price }}</span>
-          <span *ngIf="product.discountPercentage > 0" class="original-price">
-            ${{ getDiscountedPrice(product.price, product.discountPercentage).toFixed(2) }}
-          </span>
-          <span *ngIf="product.discountPercentage > 0" class="discount">
-            {{ product.discountPercentage.toFixed(0) }}% OFF
-          </span>
-        </div>
-        
-        <div class="product-rating" *ngIf="product.rating">
-          <div class="stars">
-            <span [style.width.%]="(product.rating / 5) * 100" class="filled-stars">★★★★★</span>
-            <span class="empty-stars">★★★★★</span>
-          </div>
-          <span class="rating-value">{{ product.rating.toFixed(1) }} / 5</span>
-        </div>
-        
-        <div class="product-description">
-          <p><strong>Description:</strong></p>
-          <p>{{ product.description }}</p>
-        </div>
-        
-        <div class="product-brand" *ngIf="product.brand">
-          <p><strong>Brand:</strong> {{ product.brand }}</p>
-        </div>
-        
-        <div class="product-category">
-          <p><strong>Category:</strong> {{ formatCategoryName(product.category) }}</p>
-        </div>
-        
-        <div class="product-stock">
-          <p><strong>Stock:</strong> 
-            <span [class.low-stock]="product.stock < 10">{{ product.stock }} units available</span>
-          </p>
-        </div>
-      </div>
-      
-      <div class="product-actions">
-        <button 
-          class="add-to-cart-btn" 
-          [disabled]="product.stock === 0"
-        >
-          {{ product.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
-        </button>
-      </div>
+
+    <div *ngIf="error" class="error">
+        <p>{{ error }}</p>
+        <button (click)="ngOnInit()" class="retry-btn">Retry</button>
     </div>
-  </div>
-  
-  <div *ngIf="!product && !isLoading && !error" class="product-not-found">
-    <h2>Product not found</h2>
-    <p>The requested product could not be found.</p>
-    <button [routerLink]="['/products']" class="back-btn">Browse Products</button>
-  </div>
+
+    <div *ngIf="product && !isLoading && !error" class="product-detail-container">
+        <div class="product-image-section">
+            <div class="main-image">
+                <img [src]="product.images && product.images.length > 0 ? product.images[selectedImageIndex] : product.thumbnail"
+                    [alt]="product.title" class="product-image" />
+                <div class="discount-badge" *ngIf="product.discountPercentage > 0">
+                    -{{ product.discountPercentage.toFixed(0) }}%
+                </div>
+            </div>
+
+            <div class="image-thumbnails" *ngIf="product.images && product.images.length > 1">
+                <img *ngFor="let image of product.images; let i = index" [src]="image" [alt]="product.title"
+                    class="thumbnail" [class.active]="i === selectedImageIndex" (click)="selectImage(i)" />
+            </div>
+        </div>
+
+        <div class="product-info-section">
+            <h1 class="product-title">{{ product.title }}</h1>
+
+            <div class="product-details">
+                <div class="product-pricing">
+                    <span class="current-price">${{ product.price }}</span>
+                    <span *ngIf="product.discountPercentage > 0" class="original-price">
+                        ${{ getDiscountedPrice(product.price, product.discountPercentage).toFixed(2) }}
+                    </span>
+                    <span *ngIf="product.discountPercentage > 0" class="discount">
+                        {{ product.discountPercentage.toFixed(0) }}% OFF
+                    </span>
+                </div>
+
+                <div class="product-rating" *ngIf="product.rating">
+                    <div class="stars">
+                        <span [style.width.%]="(product.rating / 5) * 100" class="filled-stars">★★★★★</span>
+                        <span class="empty-stars">★★★★★</span>
+                    </div>
+                    <span class="rating-value">{{ product.rating.toFixed(1) }} / 5</span>
+                </div>
+
+                <div class="product-description">
+                    <p><strong>Description:</strong></p>
+                    <p>{{ product.description }}</p>
+                </div>
+
+                <div class="product-brand" *ngIf="product.brand">
+                    <p><strong>Brand:</strong> {{ product.brand }}</p>
+                </div>
+
+                <div class="product-category">
+                    <p><strong>Category:</strong> {{ formatCategoryName(product.category) }}</p>
+                </div>
+
+                <div class="product-stock">
+                    <p><strong>Stock:</strong>
+                        <span [class.low-stock]="product.stock < 10">{{ product.stock }} units available</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="product-actions">
+                <div class="quantity-selector">
+                    <label for="quantity">Quantity:</label>
+                    <select id="quantity" [(ngModel)]="selectedQuantity" class="quantity-select">
+                        <option *ngFor="let num of getQuantityOptions()" [value]="num">{{ num }}</option>
+                    </select>
+                </div>
+
+                <app-add-to-cart-button [product]="product" [quantity]="selectedQuantity"
+                    [disabled]="product.stock === 0" size="large">
+                </app-add-to-cart-button>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="!product && !isLoading && !error" class="product-not-found">
+        <h2>Product not found</h2>
+        <p>The requested product could not be found.</p>
+        <button [routerLink]="['/products']" class="back-btn">Browse Products</button>
+    </div>
 </div>

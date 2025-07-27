@@ -1,0 +1,8 @@
+<button 
+  [class]="getButtonClass()"
+  [disabled]="disabled || product.stock === 0 || isLoading"
+  (click)="addToCart()"
+>
+  <span *ngIf="isLoading" class="loading-spinner"></span>
+  {{ getButtonText() }}
+</button>

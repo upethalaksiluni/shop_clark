@@ -20,5 +20,13 @@
     <div class="product-stock" [class.low-stock]="product.stock < 10">
       Stock: {{ product.stock }}
     </div>
+    
+    <div class="product-actions">
+      <app-add-to-cart-button 
+        [product]="product" 
+        [quantity]="1"
+        size="small">
+      </app-add-to-cart-button>
+    </div>
   </div>
 </div>

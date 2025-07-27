@@ -1,0 +1,65 @@
+<div class="cart-item">
+  <div class="item-image">
+    <img [src]="item.thumbnail" [alt]="item.title" />
+  </div>
+  
+  <div class="item-details">
+    <h3 class="item-title">{{ item.title }}</h3>
+    <p class="item-brand" *ngIf="item.brand">{{ item.brand }}</p>
+    <p class="item-category">{{ item.category }}</p>
+    
+    <div class="item-pricing">
+      <span class="current-price">{{ formatCurrency(getDiscountedPrice()) }}</span>
+      <span *ngIf="item.discountPercentage > 0" class="original-price">
+        {{ formatCurrency(item.price) }}
+      </span>
+      <span *ngIf="item.discountPercentage > 0" class="discount-badge">
+        -{{ item.discountPercentage.toFixed(0) }}%
+      </span>
+    </div>
+  </div>
+  
+  <div class="item-quantity">
+    <label>Quantity:</label>
+    <div class="quantity-controls">
+      <button 
+        class="quantity-btn decrease" 
+        (click)="decreaseQuantity()"
+        [disabled]="item.quantity <= 1"
+      >
+        -
+      </button>
+      
+      <input 
+        type="number" 
+        class="quantity-input"
+        [value]="item.quantity"
+        [max]="item.stock"
+        min="1"
+        (change)="onQuantityChange($event)"
+      />
+      
+      <button 
+        class="quantity-btn increase" 
+        (click)="increaseQuantity()"
+        [disabled]="item.quantity >= item.stock"
+      >
+        +
+      </button>
+    </div>
+    <p class="stock-info">{{ item.stock }} available</p>
+  </div>
+  
+  <div class="item-total">
+    <p class="total-price">{{ formatCurrency(getItemTotal()) }}</p>
+    <p *ngIf="getItemDiscount() > 0" class="savings">
+      You save: {{ formatCurrency(getItemDiscount()) }}
+    </p>
+  </div>
+  
+  <div class="item-actions">
+    <button class="remove-btn" (click)="onRemove()">
+      🗑️ Remove
+    </button>
+  </div>
+</div>
