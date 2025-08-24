@@ -1,0 +1,49 @@
+<!-- category-filter-form.component.html -->
+<div class="category-filter-form">
+  <div class="form-header">
+    <h3>Search Categories</h3>
+  </div>
+
+  <form [formGroup]="filterForm" class="filter-form">
+    <div class="search-field">
+      <div class="input-group">
+        <input
+          type="text"
+          formControlName="searchTerm"
+          placeholder="Search categories..."
+          class="search-input"
+          autocomplete="off"
+        />
+        <button
+          type="button"
+          (click)="clearSearch()"
+          class="clear-btn"
+          *ngIf="filterForm.get('searchTerm')?.value"
+        >
+          ✕
+        </button>
+      </div>
+    </div>
+  </form>
+
+  <div class="results-section">
+    <div *ngIf="isLoading" class="loading">
+      <p>Loading categories...</p>
+    </div>
+
+    <div *ngIf="error" class="error">
+      <p>{{ error }}</p>
+      <button (click)="ngOnInit()" class="retry-btn">Retry</button>
+    </div>
+
+    <div *ngIf="!isLoading && !error" class="results-info">
+      <p class="results-count">
+        Found {{ filteredCategories.length }} of {{ allCategories.length }} categories
+      </p>
+    </div>
+
+    <div *ngIf="!isLoading && !error && filteredCategories.length === 0 && filterForm.get('searchTerm')?.value" class="no-results">
+      <p>No categories found matching "{{ filterForm.get('searchTerm')?.value }}"</p>
+    </div>
+  </div>
+</div>
