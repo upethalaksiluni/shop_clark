@@ -1,0 +1,60 @@
+<h2>Profile Form (Without FormBuilder)</h2>
+<form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
+
+  <label>First Name:</label>
+  <input formControlName="firstName">
+  <div *ngIf = "profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
+    <span *ngIf="profileForm.get('firstName')?.errors?.['minLength']">First name is required (min 3 characters)</span>
+    <span *ngIf="profileForm.get('firstName')?.errors?.['maxLength']">First name is required (max 3 characters)</span>
+  </div>
+
+  <label>Last Name: </label>
+  <input formControlName="lastName">
+  <div *ngIf = "profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
+    Last name is required (min 3 characters)
+  </div>
+
+  <label>E-mail: </label>
+  <input formControlName="email">
+  <div *ngIf = "profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
+    Enter a valid email
+  </div>
+
+  <div formGroupName="address">
+    <h4>Address</h4>
+    <input formControlName="street" placeholder="Street">
+    <div *ngIf="profileForm.get('address.street')?.invalid && profileForm.get('address.street')?.touched">
+      Enter a valid address
+    </div>
+    <input formControlName="city" placeholder="city">
+    <input formControlName="country" placeholder="Country">
+  </div>
+
+  <div formArrayName="skills">
+
+    <h4>Skills</h4>
+
+    <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i">
+      <input formControlName="name" placeholder="Skill Name">
+      <div *ngIf="skill.get('name')?.invalid && skill.get('name')?.touched">
+        Name is required
+      </div>
+
+      <input type="number" formControlName="experience" placeholder="Experience (years)">
+      <div *ngIf="skill.get('experience')?.invalid && skill.get('experience')?.touched">
+        Name is required
+      </div>
+
+      <input type="number" formControlName="rating" placeholder="Rating (1-5)">
+      <div *ngIf="skill.get('rating')?.invalid && skill.get('rating')?.touched">
+       Name is required
+      </div>
+
+      <button type="button" (click)="removeSkill(i)">Remove Skill</button>
+      <hr>
+  </div>
+    <button type="button" (click)="addSkill()">Add Skill</button>
+  </div>
+  <button type="submit">Submit</button>
+</form>
+<p>{{ profileForm.value | json}}</p>
