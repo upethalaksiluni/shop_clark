@@ -4,6 +4,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { ProductsComponent } from './pages/products/products.component';
 import { ProductDetailComponent } from './pages/product-detail/product-detail.component';
 import { CartComponent } from './pages/cart/cart.component'; 
+import { ProductFormComponentComponent } from './product-form-component/product-form-component.component';
 
 const routes: Routes = [
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -11,11 +12,13 @@ const routes: Routes = [
   { path: 'products', component: ProductsComponent },
   { path: 'products/:id', component: ProductDetailComponent },
   { path: 'cart', component: CartComponent }, 
-  { path: '**', redirectTo: '/home' }
+  { path: 'product-form', component: ProductFormComponentComponent }, 
+  { path: '**', redirectTo: '/home' } // keep wildcard last
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule]
 })
-export class AppRoutingModule { }
+export class AppRoutingModule { }  import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormControl, Validators, FormArray, AbstractControl } from '@angular/forms';

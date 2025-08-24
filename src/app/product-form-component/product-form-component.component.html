@@ -1,60 +1,108 @@
 <h2>Profile Form (Without FormBuilder)</h2>
 <form [formGroup]="profileForm" (ngSubmit)="onSubmit()">
 
-  <label>First Name:</label>
-  <input formControlName="firstName">
-  <div *ngIf = "profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched">
-    <span *ngIf="profileForm.get('firstName')?.errors?.['minLength']">First name is required (min 3 characters)</span>
-    <span *ngIf="profileForm.get('firstName')?.errors?.['maxLength']">First name is required (max 3 characters)</span>
-  </div>
-
-  <label>Last Name: </label>
-  <input formControlName="lastName">
-  <div *ngIf = "profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched">
-    Last name is required (min 3 characters)
-  </div>
-
-  <label>E-mail: </label>
-  <input formControlName="email">
-  <div *ngIf = "profileForm.get('email')?.invalid && profileForm.get('email')?.touched">
-    Enter a valid email
-  </div>
-
-  <div formGroupName="address">
-    <h4>Address</h4>
-    <input formControlName="street" placeholder="Street">
-    <div *ngIf="profileForm.get('address.street')?.invalid && profileForm.get('address.street')?.touched">
-      Enter a valid address
+  <div class="form-group">
+    <label>First Name:</label>
+    <input formControlName="firstName" type="text" placeholder="Enter first name">
+    <div *ngIf="profileForm.get('firstName')?.invalid && profileForm.get('firstName')?.touched" class="error-messages">
+      <span *ngIf="profileForm.get('firstName')?.errors?.['required']">First name is required</span>
+      <span *ngIf="profileForm.get('firstName')?.errors?.['minlength']">First name must be at least 3 characters</span>
+      <span *ngIf="profileForm.get('firstName')?.errors?.['maxlength']">First name cannot exceed 100 characters</span>
     </div>
-    <input formControlName="city" placeholder="city">
-    <input formControlName="country" placeholder="Country">
   </div>
 
-  <div formArrayName="skills">
+  <div class="form-group">
+    <label>Last Name:</label>
+    <input formControlName="lastName" type="text" placeholder="Enter last name">
+    <div *ngIf="profileForm.get('lastName')?.invalid && profileForm.get('lastName')?.touched" class="error-messages">
+      <span *ngIf="profileForm.get('lastName')?.errors?.['required']">Last name is required</span>
+      <span *ngIf="profileForm.get('lastName')?.errors?.['minlength']">Last name must be at least 3 characters</span>
+    </div>
+  </div>
 
+  <div class="form-group">
+    <label>E-mail:</label>
+    <input formControlName="email" type="email" placeholder="Enter email address">
+    <div *ngIf="profileForm.get('email')?.invalid && profileForm.get('email')?.touched" class="error-messages">
+      <span *ngIf="profileForm.get('email')?.errors?.['required']">Email is required</span>
+      <span *ngIf="profileForm.get('email')?.errors?.['email']">Enter a valid email address</span>
+    </div>
+  </div>
+
+  <div formGroupName="address" class="address-section">
+    <h4>Address</h4>
+    
+    <div class="form-group">
+      <input formControlName="street" placeholder="Street Address">
+      <div *ngIf="profileForm.get('address.street')?.invalid && profileForm.get('address.street')?.touched" class="error-messages">
+        <span *ngIf="profileForm.get('address.street')?.errors?.['required']">Street address is required</span>
+        <span *ngIf="profileForm.get('address.street')?.errors?.['minlength']">Street address must be at least 3 characters</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input formControlName="city" placeholder="City">
+      <div *ngIf="profileForm.get('address.city')?.invalid && profileForm.get('address.city')?.touched" class="error-messages">
+        <span *ngIf="profileForm.get('address.city')?.errors?.['required']">City is required</span>
+      </div>
+    </div>
+
+    <div class="form-group">
+      <input formControlName="country" placeholder="Country">
+      <div *ngIf="profileForm.get('address.country')?.invalid && profileForm.get('address.country')?.touched" class="error-messages">
+        <span *ngIf="profileForm.get('address.country')?.errors?.['required']">Country is required</span>
+      </div>
+    </div>
+  </div>
+
+  <div formArrayName="skills" class="skills-section">
     <h4>Skills</h4>
 
-    <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i">
-      <input formControlName="name" placeholder="Skill Name">
-      <div *ngIf="skill.get('name')?.invalid && skill.get('name')?.touched">
-        Name is required
-      </div>
+    <div *ngFor="let skill of skills.controls; let i = index" [formGroupName]="i" class="skill-item">
+      <div class="skill-row">
+        <div class="form-group">
+          <input formControlName="name" placeholder="Skill Name">
+          <div *ngIf="skill.get('name')?.invalid && skill.get('name')?.touched" class="error-messages">
+            <span *ngIf="skill.get('name')?.errors?.['required']">Skill name is required</span>
+          </div>
+        </div>
 
-      <input type="number" formControlName="experience" placeholder="Experience (years)">
-      <div *ngIf="skill.get('experience')?.invalid && skill.get('experience')?.touched">
-        Name is required
-      </div>
+        <div class="form-group">
+          <input type="number" formControlName="experience" placeholder="Experience (years)" min="0">
+          <div *ngIf="skill.get('experience')?.invalid && skill.get('experience')?.touched" class="error-messages">
+            <span *ngIf="skill.get('experience')?.errors?.['required']">Experience is required</span>
+            <span *ngIf="skill.get('experience')?.errors?.['min']">Experience must be 0 or greater</span>
+          </div>
+        </div>
 
-      <input type="number" formControlName="rating" placeholder="Rating (1-5)">
-      <div *ngIf="skill.get('rating')?.invalid && skill.get('rating')?.touched">
-       Name is required
-      </div>
+        <div class="form-group">
+          <input type="number" formControlName="rating" placeholder="Rating (1-5)" min="1" max="5">
+          <div *ngIf="skill.get('rating')?.invalid && skill.get('rating')?.touched" class="error-messages">
+            <span *ngIf="skill.get('rating')?.errors?.['required']">Rating is required</span>
+            <span *ngIf="skill.get('rating')?.errors?.['invalidRating']">Rating must be between 1 and 5</span>
+          </div>
+        </div>
 
-      <button type="button" (click)="removeSkill(i)">Remove Skill</button>
+        <button type="button" (click)="removeSkill(i)" class="btn btn-danger" [disabled]="skills.length === 1">
+          Remove Skill
+        </button>
+      </div>
       <hr>
+    </div>
+    
+    <button type="button" (click)="addSkill()" class="btn btn-secondary">Add Skill</button>
   </div>
-    <button type="button" (click)="addSkill()">Add Skill</button>
+
+  <div class="form-actions">
+    <button type="submit" class="btn btn-primary" [disabled]="profileForm.invalid">Submit</button>
   </div>
-  <button type="submit">Submit</button>
 </form>
-<p>{{ profileForm.value | json}}</p>
+
+<div class="form-debug">
+  <h4>Form Values (Debug):</h4>
+  <pre>{{ profileForm.value | json }}</pre>
+  <h4>Form Status:</h4>
+  <p>Valid: {{ profileForm.valid }}</p>
+  <p>Touched: {{ profileForm.touched }}</p>
+  <p>Dirty: {{ profileForm.dirty }}</p>
+</div>
