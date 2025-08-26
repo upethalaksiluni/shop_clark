@@ -92,3 +92,53 @@ export class CartComponent implements OnInit, OnDestroy {
     return item.id;
   }
 }
+
+// Cart Service:
+
+// Add/remove items from cart
+// Update quantities with stock validation
+// Calculate totals with discounts
+// Persist cart in localStorage
+// Observable-based state management
+
+// Cart Components:
+
+// Cart Icon: Shows item count, clickable to go to cart
+// Add to Cart Button: Smart button with loading states
+// Cart Item: Individual cart item with quantity controls
+// Cart Page: Full cart view with checkout functionality
+
+// Enhanced Product Display:
+
+// Add to cart buttons on product cards and detail pages
+// Quantity selectors on product detail page
+// Stock validation and low stock warnings
+// Discount calculations and savings display
+
+
+// .......................................................................................................................................................................................................................................
+// .............................................................................
+
+// 3. Cart Components
+// a. Cart Icon (cart-icon.component.ts/html)
+// Displays a cart icon with a badge showing the total item count.
+// Clicking the icon navigates to the cart page.
+// b. Add to Cart Button (add-to-cart-button.component.ts/html)
+// Smart button that:
+// Shows loading state when adding.
+// Disables if out of stock or already in cart.
+// Displays different text based on state (e.g., "Add to Cart", "In Cart", "Out of Stock").
+// Handles quantity and size (small/medium/large) for different UI contexts.
+// c. Cart Item (cart-item.component.ts/html)
+// Displays individual cart items with:
+// Product image, title, brand, category, pricing, and discount.
+// Quantity controls (increase, decrease, direct input).
+// Remove button.
+// Shows total price and savings for each item.
+// Emits events for quantity changes and removal.
+// d. Cart Page (cart.component.ts/html)
+// Main cart view:
+// Shows all items in the cart using app-cart-item.
+// Displays order summary (subtotal, discount, total, savings).
+// Provides actions: clear cart, proceed to checkout, continue shopping.
+// Handles empty cart state with a friendly message and button to shop.

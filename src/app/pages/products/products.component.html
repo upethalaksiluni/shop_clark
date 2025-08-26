@@ -2,7 +2,7 @@
   <div class="page-header">
     <h1>
       <span *ngIf="!currentCategory">All Products</span>
-      <span *ngIf="currentCategory">{{ formatCategoryName(currentCategory) }}</span>
+      <span *ngIf="currentCategory">{{ currentCategory | categoryFormat }}</span>
     </h1>
     <p *ngIf="!isLoading && !error" class="products-count">
       {{ products.length }} products found

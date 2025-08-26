@@ -30,9 +30,9 @@
 
             <div class="product-details">
                 <div class="product-pricing">
-                    <span class="current-price">${{ product.price }}</span>
+                    <span class="current-price">{{ product.price | currencyFormat }}</span>
                     <span *ngIf="product.discountPercentage > 0" class="original-price">
-                        ${{ getDiscountedPrice(product.price, product.discountPercentage).toFixed(2) }}
+                        {{ product.price | discountPrice:product.discountPercentage | currencyFormat }}
                     </span>
                     <span *ngIf="product.discountPercentage > 0" class="discount">
                         {{ product.discountPercentage.toFixed(0) }}% OFF
@@ -40,16 +40,15 @@
                 </div>
 
                 <div class="product-rating" *ngIf="product.rating">
-                    <div class="stars">
-                        <span [style.width.%]="(product.rating / 5) * 100" class="filled-stars">★★★★★</span>
-                        <span class="empty-stars">★★★★★</span>
+                    <div class="rating-stars">
+                        {{ product.rating | starRating }}
                     </div>
                     <span class="rating-value">{{ product.rating.toFixed(1) }} / 5</span>
                 </div>
 
                 <div class="product-description">
                     <p><strong>Description:</strong></p>
-                    <p>{{ product.description }}</p>
+                    <p>{{ product.description | truncateText:200 }}</p>
                 </div>
 
                 <div class="product-brand" *ngIf="product.brand">
@@ -57,12 +56,14 @@
                 </div>
 
                 <div class="product-category">
-                    <p><strong>Category:</strong> {{ formatCategoryName(product.category) }}</p>
+                    <p><strong>Category:</strong> {{ product.category | categoryFormat }}</p>
                 </div>
 
                 <div class="product-stock">
                     <p><strong>Stock:</strong>
-                        <span [class.low-stock]="product.stock < 10">{{ product.stock }} units available</span>
+                        <span [class]="(product.stock | stockStatus).class">
+                            {{ product.stock }} units available - {{ (product.stock | stockStatus).status }}
+                        </span>
                     </p>
                 </div>
             </div>

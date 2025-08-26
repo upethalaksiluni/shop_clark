@@ -1,0 +1,180 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h2>Welcome Back</h2>
+      <p>Please sign in to your account</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+      
+      <!-- Login Type Toggle -->
+      <div class="login-type-toggle">
+        <button 
+          type="button" 
+          class="toggle-btn"
+          [class.active]="loginType === 'username'"
+          (click)="toggleLoginType()">
+          Username
+        </button>
+        <button 
+          type="button" 
+          class="toggle-btn"
+          [class.active]="loginType === 'email'"
+          (click)="toggleLoginType()">
+          Email
+        </button>
+      </div>
+
+      <!-- Login Identifier Field (Username or Email) -->
+      <div class="form-group">
+        <label [for]="'loginIdentifier'">{{ getLoginLabel() }}:</label>
+        <div class="input-wrapper">
+          <input 
+            id="loginIdentifier"
+            formControlName="loginIdentifier" 
+            [type]="loginType === 'email' ? 'email' : 'text'"
+            [placeholder]="getLoginPlaceholder()"
+            class="form-control"
+            [class.is-invalid]="loginForm.get('loginIdentifier')?.invalid && loginForm.get('loginIdentifier')?.touched"
+            autocomplete="username">
+          <div class="input-icon">
+            <i *ngIf="loginType === 'email'" class="icon">📧</i>
+            <i *ngIf="loginType === 'username'" class="icon">👤</i>
+          </div>
+        </div>
+        
+        <!-- Error Messages for Login Identifier -->
+        <div *ngIf="loginForm.get('loginIdentifier')?.invalid && loginForm.get('loginIdentifier')?.touched" class="error-messages">
+          <!-- Required Error -->
+          <span *ngIf="loginForm.get('loginIdentifier')?.errors?.['required']">
+            {{ getLoginLabel() }} is required
+          </span>
+          
+          <!-- Email Validation Errors -->
+          <span *ngIf="loginType === 'email' && loginForm.get('loginIdentifier')?.errors?.['invalidEmail']">
+            Please enter a valid email address
+          </span>
+          <span *ngIf="loginType === 'email' && loginForm.get('loginIdentifier')?.errors?.['consecutiveDots']">
+            Email cannot contain consecutive dots
+          </span>
+          <span *ngIf="loginType === 'email' && loginForm.get('loginIdentifier')?.errors?.['startsOrEndsWithDot']">
+            Email cannot start or end with a dot
+          </span>
+          
+          <!-- Username Validation Errors -->
+          <span *ngIf="loginType === 'username' && loginForm.get('loginIdentifier')?.errors?.['minLength']">
+            Username must be at least 3 characters long
+          </span>
+          <span *ngIf="loginType === 'username' && loginForm.get('loginIdentifier')?.errors?.['maxLength']">
+            Username cannot exceed 20 characters
+          </span>
+          <span *ngIf="loginType === 'username' && loginForm.get('loginIdentifier')?.errors?.['invalidUsername']">
+            Username can only contain letters, numbers, and underscores
+          </span>
+          <span *ngIf="loginType === 'username' && loginForm.get('loginIdentifier')?.errors?.['startsWithNumber']">
+            Username cannot start with a number
+          </span>
+          <span *ngIf="loginType === 'username' && loginForm.get('loginIdentifier')?.errors?.['allNumbers']">
+            Username cannot be all numbers
+          </span>
+          <span *ngIf="loginType === 'username' && loginForm.get('loginIdentifier')?.errors?.['reservedUsername']">
+            This username is reserved and cannot be used
+          </span>
+        </div>
+      </div>
+
+      <!-- Password Field -->
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <div class="input-wrapper password-wrapper">
+          <input 
+            id="password"
+            formControlName="password" 
+            [type]="showPassword ? 'text' : 'password'"
+            placeholder="Enter your password"
+            class="form-control"
+            [class.is-invalid]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+            autocomplete="current-password">
+          <button 
+            type="button" 
+            class="password-toggle"
+            (click)="togglePasswordVisibility()"
+            [title]="showPassword ? 'Hide password' : 'Show password'">
+            <span *ngIf="!showPassword">👁️</span>
+            <span *ngIf="showPassword">🙈</span>
+          </button>
+        </div>
+        
+        <!-- Error Messages for Password -->
+        <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched" class="error-messages">
+          <span *ngIf="loginForm.get('password')?.errors?.['required']">Password is required</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['minlength']">Password must be at least 6 characters long</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['maxlength']">Password cannot exceed 50 characters</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['noUppercase']">Password must contain at least one uppercase letter</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['noLowercase']">Password must contain at least one lowercase letter</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['noDigit']">Password must contain at least one number</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['noSpecialChar']">Password must contain at least one special character</span>
+          <span *ngIf="loginForm.get('password')?.errors?.['hasSpaces']">Password cannot contain spaces</span>
+        </div>
+      </div>
+
+      <!-- Remember Me Checkbox -->
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input 
+            type="checkbox" 
+            formControlName="rememberMe"
+            class="checkbox-input">
+          <span class="checkbox-custom"></span>
+          <span class="checkbox-text">Remember me for 30 days</span>
+        </label>
+      </div>
+
+      <!-- Form Actions -->
+      <div class="form-actions">
+        <button 
+          type="submit" 
+          class="btn btn-primary btn-login"
+          [disabled]="loginForm.invalid || isSubmitting">
+          <span *ngIf="!isSubmitting">Sign In</span>
+          <span *ngIf="isSubmitting" class="loading-text">
+            <span class="spinner"></span>
+            Signing In...
+          </span>
+        </button>
+
+        <button 
+          type="button" 
+          class="btn btn-secondary btn-reset"
+          (click)="resetForm()"
+          [disabled]="isSubmitting">
+          Reset Form
+        </button>
+      </div>
+
+      <!-- Additional Links -->
+      <div class="additional-links">
+        <a href="#" class="link">Forgot your password?</a>
+        <span class="separator">•</span>
+        <a href="#" class="link">Create new account</a>
+      </div>
+
+    </form>
+
+    <!-- Form Debug (Remove in production) -->
+    <div class="form-debug" *ngIf="false">
+      <h4>Form Debug Information:</h4>
+      <div class="debug-info">
+        <h5>Form Values:</h5>
+        <pre>{{ loginForm.value | json }}</pre>
+        <h5>Form Status:</h5>
+        <ul>
+          <li>Valid: <span [class]="loginForm.valid ? 'text-success' : 'text-danger'">{{ loginForm.valid }}</span></li>
+          <li>Touched: {{ loginForm.touched }}</li>
+          <li>Dirty: {{ loginForm.dirty }}</li>
+          <li>Login Type: {{ loginType }}</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>

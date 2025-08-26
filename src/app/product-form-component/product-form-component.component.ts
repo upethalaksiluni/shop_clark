@@ -11,13 +11,32 @@ export class ProductFormComponentComponent implements OnInit {
 
   ngOnInit(): void {
     this.profileForm = new FormGroup({
-      firstName: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(100)]),
-      lastName: new FormControl('', [Validators.required, Validators.minLength(3)]), // Added minLength validator
-      email: new FormControl('', [Validators.required, Validators.email]),
+      username: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(3), 
+        Validators.maxLength(20),
+        this.usernameValidator
+      ]),
+      firstName: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(3), 
+        Validators.maxLength(100)
+      ]),
+      lastName: new FormControl('', [
+        Validators.required, 
+        Validators.minLength(3)
+      ]),
+      email: new FormControl('', [
+        Validators.required, 
+        Validators.email
+      ]),
       address: new FormGroup({
-        street: new FormControl('', [Validators.required, Validators.minLength(3)]),
-        city: new FormControl('', Validators.required), // Added required validator
-        country: new FormControl('', Validators.required) // Added required validator
+        street: new FormControl('', [
+          Validators.required, 
+          Validators.minLength(3)
+        ]),
+        city: new FormControl('', Validators.required),
+        country: new FormControl('', Validators.required)
       }),
       skills: new FormArray([this.createSkill()])
     });
@@ -26,12 +45,44 @@ export class ProductFormComponentComponent implements OnInit {
   createSkill(): FormGroup {
     return new FormGroup({
       name: new FormControl('', Validators.required),
-      experience: new FormControl('', [Validators.required, Validators.min(0)]),
-      rating: new FormControl(1, [Validators.required, this.ratingValidator])
+      experience: new FormControl('', [
+        Validators.required, 
+        Validators.min(0),
+        Validators.max(50)
+      ]),
+      rating: new FormControl(1, [
+        Validators.required, 
+        this.ratingValidator
+      ])
     });
   }
 
-  // Fixed: Made static method for proper validator usage
+  // Custom username validator
+  usernameValidator(control: AbstractControl): {[key: string]: any} | null {
+    const value = control.value;
+    if (!value) return null;
+    
+    // Username should contain only alphanumeric characters and underscores
+    const usernameRegex = /^[a-zA-Z0-9_]+$/;
+    
+    if (!usernameRegex.test(value)) {
+      return { invalidUsername: true };
+    }
+    
+    // Username should not start with a number
+    if (/^[0-9]/.test(value)) {
+      return { startsWithNumber: true };
+    }
+    
+    // Username should not be all numbers
+    if (/^[0-9]+$/.test(value)) {
+      return { allNumbers: true };
+    }
+    
+    return null;
+  }
+
+  // Rating validator (fixed to be static)
   ratingValidator(control: AbstractControl): {[key: string]: any} | null {
     const value = control.value;
     if (value < 1 || value > 5) {
@@ -49,7 +100,7 @@ export class ProductFormComponentComponent implements OnInit {
   }
 
   removeSkill(index: number): void {
-    if (this.skills.length > 1) { // Prevent removing all skills
+    if (this.skills.length > 1) {
       this.skills.removeAt(index);
     }
   }
@@ -58,9 +109,11 @@ export class ProductFormComponentComponent implements OnInit {
     if (this.profileForm.valid) {
       console.log('Form Submitted:', this.profileForm.value);
       // Handle form submission logic here
+      alert('Form submitted successfully!');
     } else {
       console.log('Form is invalid');
       this.markFormGroupTouched(this.profileForm);
+      alert('Please fill all required fields correctly.');
     }
   }
 
@@ -84,3 +137,14 @@ export class ProductFormComponentComponent implements OnInit {
     });
   }
 }
+
+// createSkill() - Creates a new skill FormGroup
+// addSkill() - Adds new skill to the FormArray
+// removeSkill(index) - Removes skill at specific index
+// get skills() - Getter to access the FormArray
+
+// The markFormGroupTouched() method includes special handling for FormArray controls
+
+// FormArray Import & Declaration
+// typescriptimport { FormArray } from '@angular/forms';
+// skills: new FormArray([this.createSkill()])

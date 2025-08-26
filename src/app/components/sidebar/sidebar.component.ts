@@ -10,7 +10,8 @@ export class SidebarComponent {
     { name: 'Home', route: '/home', icon: '🏠' },
     { name: 'Products', route: '/products', icon: '🛒' },
     { name: 'Cart', route: '/cart', icon: '🛍️' },
-    { name: 'Product Form', route: '/product-form', icon: '📝' }
+    { name: 'Product Form', route: '/product-form', icon: '📝' },
+    { name: 'Login Form', route: '/login-form', icon: '🔑' }
 
   ];
 }

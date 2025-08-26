@@ -1,109 +1,163 @@
-/* product-form-component.component.css */
+.form-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+h2 {
+  color: #333;
+  text-align: center;
+  margin-bottom: 30px;
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+}
 
 .form-group {
-  margin-bottom: 1rem;
+  margin-bottom: 20px;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: bold;
-  color: #333;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: #555;
 }
 
-.form-group input {
+.form-control {
   width: 100%;
-  padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  font-size: 1rem;
-  transition: border-color 0.3s ease;
+  padding: 10px 12px;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
-.form-group input:focus {
+.form-control:focus {
   outline: none;
   border-color: #007bff;
-  box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+  box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.1);
 }
 
-.form-group input.ng-invalid.ng-touched {
+.form-control.is-invalid {
   border-color: #dc3545;
-}
-
-.form-group input.ng-valid.ng-touched {
-  border-color: #28a745;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
 }
 
 .error-messages {
-  margin-top: 0.25rem;
+  margin-top: 5px;
 }
 
 .error-messages span {
   display: block;
   color: #dc3545;
-  font-size: 0.875rem;
-  margin-bottom: 0.25rem;
+  font-size: 12px;
+  margin-bottom: 2px;
+  font-weight: 500;
 }
 
+/* Address Section */
 .address-section {
   background-color: #f8f9fa;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 25px 0;
+  border: 1px solid #e9ecef;
 }
 
 .address-section h4 {
   margin-top: 0;
-  margin-bottom: 1rem;
+  margin-bottom: 15px;
   color: #495057;
-  border-bottom: 2px solid #dee2e6;
-  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #dee2e6;
+  padding-bottom: 8px;
 }
 
+/* Skills Section */
 .skills-section {
-  background-color: #f8f9fa;
-  padding: 1rem;
-  border-radius: 6px;
-  margin-bottom: 1.5rem;
+  background-color: #f1f3f4;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 25px 0;
+  border: 1px solid #e0e0e0;
 }
 
-.skills-section h4 {
-  margin-top: 0;
-  margin-bottom: 1rem;
-  color: #495057;
+.skills-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
   border-bottom: 2px solid #dee2e6;
-  padding-bottom: 0.5rem;
+  padding-bottom: 10px;
+}
+
+.skills-header h4 {
+  margin: 0;
+  color: #495057;
+}
+
+.add-skill-btn {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.skills-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .skill-item {
   background-color: white;
-  padding: 1rem;
-  border-radius: 4px;
-  margin-bottom: 1rem;
   border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  position: relative;
 }
 
-.skill-row {
+.skill-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 10px;
+}
+
+.skill-header h5 {
+  margin: 0;
+  color: #6c757d;
+  font-size: 16px;
+}
+
+.skill-fields {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr auto;
-  gap: 1rem;
-  align-items: start;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 15px;
 }
 
 @media (max-width: 768px) {
-  .skill-row {
+  .skill-fields {
     grid-template-columns: 1fr;
-    gap: 0.5rem;
+  }
+  
+  .skills-header {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
   }
 }
 
+/* Buttons */
 .btn {
-  padding: 0.5rem 1rem;
+  padding: 10px 20px;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 0.9rem;
-  transition: background-color 0.3s ease;
+  transition: all 0.3s ease;
   text-decoration: none;
   display: inline-block;
   text-align: center;
@@ -121,6 +175,7 @@
 
 .btn-primary:hover:not(:disabled) {
   background-color: #0056b3;
+  transform: translateY(-1px);
 }
 
 .btn-secondary {
@@ -132,6 +187,15 @@
   background-color: #545b62;
 }
 
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.btn-success:hover:not(:disabled) {
+  background-color: #1e7e34;
+}
+
 .btn-danger {
   background-color: #dc3545;
   color: white;
@@ -141,49 +205,72 @@
   background-color: #c82333;
 }
 
+.btn-sm {
+  padding: 6px 12px;
+  font-size: 12px;
+}
+
+.btn-lg {
+  padding: 12px 24px;
+  font-size: 16px;
+}
+
+/* Form Actions */
 .form-actions {
-  margin-top: 2rem;
-  text-align: center;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 2px solid #e9ecef;
 }
 
-.form-actions .btn {
-  padding: 0.75rem 2rem;
-  font-size: 1rem;
+@media (max-width: 480px) {
+  .form-actions {
+    flex-direction: column;
+  }
 }
 
+/* Debug Section */
 .form-debug {
-  margin-top: 2rem;
-  padding: 1rem;
   background-color: #f8f9fa;
-  border-radius: 6px;
   border: 1px solid #dee2e6;
+  border-radius: 8px;
+  padding: 20px;
+  margin-top: 30px;
 }
 
-.form-debug h4 {
-  margin-top: 1rem;
-  margin-bottom: 0.5rem;
+.form-debug h4,
+.form-debug h5 {
   color: #495057;
+  margin-bottom: 10px;
 }
 
-.form-debug h4:first-child {
-  margin-top: 0;
-}
-
-.form-debug pre {
+.debug-info pre {
   background-color: #e9ecef;
-  padding: 0.75rem;
+  padding: 10px;
   border-radius: 4px;
-  overflow-x: auto;
-  font-size: 0.875rem;
+  font-size: 12px;
+  max-height: 200px;
+  overflow-y: auto;
 }
 
-.form-debug p {
-  margin: 0.25rem 0;
-  font-family: 'Courier New', monospace;
+.debug-info ul {
+  list-style: none;
+  padding: 0;
 }
 
-hr {
-  margin: 1rem 0;
-  border: none;
-  border-top: 1px solid #dee2e6;
+.debug-info li {
+  padding: 2px 0;
+  font-size: 14px;
+}
+
+.text-success {
+  color: #28a745 !important;
+  font-weight: bold;
+}
+
+.text-danger {
+  color: #dc3545 !important;
+  font-weight: bold;
 }

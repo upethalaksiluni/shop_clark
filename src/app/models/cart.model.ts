@@ -25,3 +25,7 @@ export interface CartSummary {
   totalItems: number;
   finalTotal: number;
 }
+
+// CartItem: Represents an item in the cart, including product details, quantity, stock, discount, etc.
+// Cart: Represents the entire cart, including a list of items, total counts, prices, and savings.
+// CartSummary: Used for checkout/order summary, showing subtotal, discounts, and final total.

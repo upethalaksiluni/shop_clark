@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
-import { CategoryService } from '../../services/category.service';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -17,7 +16,6 @@ export class ProductsComponent implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private categoryService: CategoryService,
     private route: ActivatedRoute
   ) {}
 
@@ -48,8 +46,8 @@ export class ProductsComponent implements OnInit {
       }
     });
   }
-
-  formatCategoryName(slug: string): string {
-    return this.categoryService.formatCategoryName(slug);
-  }
 }
+
+// In Products List Page:
+
+// Category name formatting in headers

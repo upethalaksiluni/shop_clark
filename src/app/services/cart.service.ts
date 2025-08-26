@@ -193,3 +193,17 @@ export class CartService {
     };
   }
 }
+
+// Cart Service (cart.service.ts)
+// State Management: Uses a BehaviorSubject to manage cart state reactively.
+// Persistence: Loads and saves cart data to localStorage for persistence across sessions.
+// Core Methods:
+// getCart(): Returns an observable of the cart for components to subscribe.
+// addToCart(product, quantity): Adds a product to the cart, updates quantity if already present.
+// removeFromCart(cartItemId): Removes an item by its unique ID.
+// updateQuantity(cartItemId, quantity): Updates the quantity of a specific item.
+// clearCart(): Empties the cart.
+// isInCart(productId): Checks if a product is already in the cart.
+// getProductQuantity(productId): Gets the quantity of a specific product in the cart.
+// getCartSummary(): Calculates and returns a summary for checkout.
+// Calculations: Totals, discounts, and savings are calculated based on cart items.

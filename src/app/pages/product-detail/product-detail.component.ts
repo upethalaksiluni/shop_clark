@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../services/product.service';
-import { CategoryService } from '../../services/category.service';
 import { Product } from '../../models/product.model';
 
 @Component({
@@ -18,8 +17,7 @@ export class ProductDetailComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService,
-    private categoryService: CategoryService
+    private productService: ProductService
   ) {}
 
   ngOnInit() {
@@ -52,15 +50,6 @@ export class ProductDetailComponent implements OnInit {
   selectImage(index: number) {
     this.selectedImageIndex = index;
   }
-
-  formatCategoryName(slug: string): string {
-    return this.categoryService.formatCategoryName(slug);
-  }
-
-  getDiscountedPrice(price: number, discount: number): number {
-    return price - (price * discount / 100);
-  }
-
   
   getQuantityOptions(): number[] {
     if (!this.product) return [1];
@@ -69,3 +58,12 @@ export class ProductDetailComponent implements OnInit {
     return Array.from({ length: maxQuantity }, (_, i) => i + 1);
   }
 }
+
+// In Product Detail Page:
+
+// Price formatting with currency symbols
+// Discounted price calculations
+// Category name formatting
+// Star rating display
+// Stock status with CSS classes
+// Description truncation
